@@ -65,8 +65,12 @@ done
 echo -e "\n\n============================================================"
 echo "SUMMARY"
 echo "Tested $project_count projects"
-echo "$failure_count failures"
 
-for project in $failed_projects; do
-    echo "    $project"
-done
+if [ "$failure_count" = "0" ]; then
+    echo "No failures."
+else
+    echo "$failure_count failures:"
+    for project in $failed_projects; do
+        echo "    $project"
+    done
+fi

@@ -15,7 +15,7 @@ function echodo {
     "$@"
     local rv="$?"
     if [ "$rv" != "0" ]; then
-        echo "ERROR: exit status $? from '$@'"
+        echo "ERROR: exit status $rv from '$@' in '$cwd'"
     fi
     return $rv
 }
@@ -87,7 +87,9 @@ function run_tests {
             rv="$?"
         else
             echo "WARNING: Don't know how to test $project"
+            rv="1"
         fi
+        exit "$rv"
     )
     return $rv
 }
