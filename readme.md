@@ -24,3 +24,7 @@ To run tests with a Clojure JAR at `/tmp/clojure.jar`:
 For more command-line options, run:
 
     ./script/argos.sh -h
+
+To add new projects to the script, edit `projects.txt` and add a line
+like `$user/$project` where `$user` is a GitHub username and
+`$project` is a GitHub project name owned by that user.
