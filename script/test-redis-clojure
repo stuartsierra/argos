@@ -1,4 +1,0 @@
-. script/test-helpers
-
-testLatestWithLein work/redis-clojure
-
