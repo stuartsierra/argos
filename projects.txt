@@ -1,0 +1,14 @@
+clojure/core.incubator
+clojure/core.logic
+clojure/core.unify
+clojure/data.finger-tree
+clojure/data.json
+clojure/java.classpath
+clojure/java.data
+clojure/java.jdbc
+clojure/java.jmx
+clojure/test.generative
+clojure/tools.logging
+clojure/tools.macro
+clojure/toos.namespace
+clojure/tools.nrepl
