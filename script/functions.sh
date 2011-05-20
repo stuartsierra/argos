@@ -22,15 +22,16 @@ function echodo {
 
 function clone_project {
     local project="$1"
-    local userdir=$(dirname $project)
-    local my_dir="$WORK_DIR/$userdir"
-    mkdir -p "$my_dir"
-    (
-        cd "$my_dir"
-        if [ ! -d "$project" ]; then
+    local username=$(dirname "$project")
+    local projectname=$(basename "$project")
+    local my_dir="$WORK_DIR/$username"
+    if [ ! -d "$WORK_DIR/$username/$projectname" ]; then
+        mkdir -p "$my_dir"
+        (
+            cd "$my_dir"
             echodo git clone "git://github.com/${project}.git"
-        fi
-    )
+        )
+    fi
 }
 
 function update_git {
@@ -82,7 +83,7 @@ function run_tests {
             echodo lein test
             rv="$?"
         elif [ -e pom.xml ]; then
-            echodo mvn $mvn_opts test
+            echodo mvn $mvn_opts clean test
             rv="$?"
         else
             echo "WARNING: Don't know how to test $project"
@@ -93,7 +94,8 @@ function run_tests {
 
 function do_argos_project {
     local project="$1"
+    local clojure_jar="$2"
     update_git "$project"
-    update_deps "$project"
-    run_tests "$project"
+    update_deps "$project" 
+    run_tests "$project" "$clojure_jar"
 }

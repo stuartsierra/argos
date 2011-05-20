@@ -4,17 +4,22 @@ cd `dirname $0`/..
 source script/functions.sh
 
 function print_usage {
-    echo <<EOF
+    cat <<EOF
 Usage: $0 [options]
 Options:
+ -h       Print help
  -o       Offline mode; do not update dependencies
  -j file  Use file as the clojure.jar
+
+ -p user/project
+      Test only project identified by GitHub username/project-name.
+      May be supplied multiple times.
 EOF
 }
 
 DEFAULT_PROJECTS=$(cat projects.txt)
 
-while getopts ":o:p:" opt; do
+while getopts ":ohj:p:" opt; do
     case $opt in
         o)
             echo "OFFLINE MODE"
@@ -50,7 +55,7 @@ for project in $PROJECTS; do
     project_count=$(( $project_count + 1 ))
     echo -e "\n\n============================================================"
     clone_project "$project"
-    do_argos_project "$project"
+    do_argos_project "$project" "$CLOJURE_JAR"
     if [ "$?" != "0" ]; then
         failure_count=$(( $failure_count + 1 ))
         failed_projects="$failed_projects $project"
