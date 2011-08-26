@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 cd `dirname $0`/..
+
+OFFLINE="false"
+WORK_DIR="./work"
+
 source script/functions.sh
 
 function print_usage {

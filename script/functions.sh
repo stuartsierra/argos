@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-OFFLINE="false"
-WORK_DIR="./work"
-
 function die {
     echo "$@"
     exit 1
@@ -39,8 +36,8 @@ function update_git {
     (
         cd "$WORK_DIR/$project"
         if [ "$OFFLINE" = "false" ]; then
-            git checkout -q master
-            git pull -q
+            echodo git checkout -q master
+            echodo git pull -q
         fi
     )
 }
