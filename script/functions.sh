@@ -72,13 +72,15 @@ function run_tests {
     (
         cd "$WORK_DIR/$project"
         if [ -e project.clj ]; then
-            cd lib
-            rm -f clojure.jar \
-                clojure-?.?.?.jar \
-                clojure-?.?.?-alpha?.jar \
-                clojure-?.?.?-beta?.jar \
-                clojure-?.?.?-master-SNAPSHOT.jar \
-                clojure-?.?.?-SNAPSHOT.jar
+            (
+                cd lib
+                rm -f clojure.jar \
+                    clojure-?.?.?.jar \
+                    clojure-?.?.?-alpha?.jar \
+                    clojure-?.?.?-beta?.jar \
+                    clojure-?.?.?-master-SNAPSHOT.jar \
+                    clojure-?.?.?-SNAPSHOT.jar
+            )
             ln -s "${clojure_jar}" lib/clojure.jar
             echodo lein test
             rv="$?"
