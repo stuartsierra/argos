@@ -86,7 +86,7 @@ function run_tests {
             rv="$?"
         else
             echo "WARNING: Don't know how to test $project"
-            rv="1"
+            rv="100"
         fi
         exit "$rv"
     )

@@ -53,14 +53,20 @@ mkdir -p "$WORK_DIR"
 
 project_count=0
 failure_count=0
+unrecognized_count=0
 failed_projects=""
+unrecognized_projects=""
 
 for project in $PROJECTS; do
     project_count=$(( $project_count + 1 ))
     echo -e "\n\n============================================================"
     clone_project "$project"
     do_argos_project "$project" "$CLOJURE_JAR"
-    if [ "$?" != "0" ]; then
+    rv="$?"
+    if [ "$rv" = "100" ]; then
+        unrecognized_count=$(( $unrecognized_count + 1 ))
+        unrecognized_projects="$unrecognized_projects $project"
+    elif [ "$rv" != "0" ]; then
         failure_count=$(( $failure_count + 1 ))
         failed_projects="$failed_projects $project"
     fi
@@ -75,6 +81,15 @@ if [ "$failure_count" = "0" ]; then
 else
     echo "$failure_count failures:"
     for project in $failed_projects; do
-        echo "    $project"
+        echo "    FAILED: $project"
     done
 fi
+
+if [ "$unrecognized_count" != "0" ]; then
+    echo "$unrecognized_count projects had an unrecognized build:"
+    for project in $unrecognized_projects; do
+        echo "    UNRECOGNIZED: $project"
+    done
+fi
+
+exit "$failure_count"
